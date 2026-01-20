@@ -1,119 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora hipoteca — simulador básico</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora hipoteca — simulador básico</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-<h1>Calculadora hipoteca</h1>
-</header>
-<nav>
-<button class="tab-btn active" data-tab="calcular">Calcular</button>
-<button class="tab-btn" data-tab="escenarios">Escenarios</button>
-</nav>
-<main>
-<!-- Sección Calcular -->
-<section id="calcular" class="tab-content active">
-<div class="container">
-<h2>Simulador de hipoteca</h2>
+    <header>
+        <h1>Calculadora hipoteca</h1>
+    </header>
+    <nav>
+        <button class="tab-btn active" data-tab="calcular">Calcular</button>
+        <button class="tab-btn" data-tab="escenarios">Escenarios</button>
+    </nav>
+    <main>
+        <!-- Sección Calcular -->
+        <section id="calcular" class="tab-content active">
+            <div class="container">
+                <h2>Simulador de hipoteca</h2>
+                
+                <form id="calc-form" class="calc-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="precio-vivienda">Precio de la vivienda (€)</label>
+                            <input type="number" id="precio-vivienda" name="precio-vivienda" min="0" step="1000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="porcentaje-financiacion">Porcentaje de financiación (%)</label>
+                            <input type="number" id="porcentaje-financiacion" name="porcentaje-financiacion" min="0" max="100" step="1" value="80" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="principal">Importe hipoteca (€)</label>
+                            <input type="number" id="principal" name="principal" min="0" step="1000" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="plazo">Plazo (años)</label>
+                            <input type="number" id="plazo" name="plazo" min="1" max="50" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interes">Interés nominal anual (%)</label>
+                            <input type="number" id="interes" name="interes" min="0" max="20" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fecha-inicio">Fecha de inicio</label>
+                            <input type="month" id="fecha-inicio" name="fecha-inicio" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Calcular</button>
+                        <button type="button" id="save-scenario" class="btn btn-secondary" disabled>Guardar como escenario</button>
+                    </div>
+                </form>
+                <div id="error-messages"></div>
+                <div id="calc-results" class="results hidden">
+                    <div class="resumen-section">
+                        <h3>Resumen</h3>
+                        <div id="resumen-content" class="resumen-grid"></div>
+                    </div>
+                    <div class="tabla-section">
+                        <h3>Tabla de amortización</h3>
+                        <div id="tabla-content" class="tabla-container"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<form id="calc-form" class="calc-form">
-<div class="form-grid">
-<div class="form-group">
-<label for="precio-vivienda">Precio de la vivienda (€)</label>
-<input type="number" id="precio-vivienda" name="precio-vivienda" min="0" step="1000" required>
-</div>
-
-<div class="form-group">
-<label for="porcentaje-financiacion">Porcentaje de financiación (%)</label>
-<input type="number" id="porcentaje-financiacion" name="porcentaje-financiacion" min="0" max="100" step="1" value="80" required>
-</div>
-
-<div class="form-group">
-<label for="principal">Importe hipoteca (€)</label>
-<input type="number" id="principal" name="principal" min="0" step="1000" readonly>
-</div>
-
-<div class="form-group">
-<label for="plazo">Plazo (años)</label>
-<input type="number" id="plazo" name="plazo" min="1" max="50" required>
-</div>
-
-<div class="form-group">
-<label for="interes">Interés nominal anual (%)</label>
-<input type="number" id="interes" name="interes" min="0" max="20" step="0.01" required>
-</div>
-
-<div class="form-group">
-<label for="fecha-inicio">Fecha de inicio</label>
-<input type="month" id="fecha-inicio" name="fecha-inicio" required>
-</div>
-</div>
-<div class="form-actions">
-<button type="submit" class="btn btn-primary">Calcular</button>
-<button type="button" id="save-scenario" class="btn btn-secondary" disabled>Guardar como escenario</button>
-</div>
-</form>
-<div id="error-messages"></div>
-<div id="calc-results" class="results hidden">
-<div class="resumen-section">
-<h3>Resumen</h3>
-<div id="resumen-content" class="resumen-grid"></div>
-</div>
-<div class="tabla-section">
-<h3>Tabla de amortización</h3>
-<div id="tabla-content" class="tabla-container"></div>
-</div>
-</div>
-</div>
-</section>
-<!-- Sección Escenarios -->
-<section id="escenarios" class="tab-content">
-<div class="container">
-<h2>Escenarios guardados</h2>
-
-<div class="filters-section">
-<div class="search-group">
-<label for="search-input">Buscar</label>
-<input type="text" id="search-input" placeholder="Nombre o etiquetas...">
-</div>
-
-<div class="filter-group">
-<label for="tag-filter">Etiqueta</label>
-<select id="tag-filter">
-<option value="todas">Todas</option>
-</select>
-</div>
-
-<div class="filter-group">
-<label for="order-by">Ordenar por</label>
-<select id="order-by">
-<option value="cuota">Cuota</option>
-<option value="coste">Coste total</option>
-<option value="plazo">Plazo</option>
-</select>
-</div>
-
-<div class="filter-group">
-<label for="order-dir">Dirección</label>
-<select id="order-dir">
-<option value="asc">Ascendente</option>
-<option value="desc">Descendente</option>
-</select>
-</div>
-</div>
-<div id="escenarios-content" class="scenarios-list"></div>
-</div>
-</section>
-</main>
-<footer>
-<p>Esta aplicación utiliza localStorage para guardar tus datos localmente.</p>
-</footer>
-<div id="status-messages" aria-live="polite" class="sr-only"></div>
-<script type="module" src="./src/main.js"></script>
+        <!-- Sección Escenarios -->
+        <section id="escenarios" class="tab-content">
+            <div class="container">
+                <h2>Escenarios guardados</h2>
+                
+                <div class="filters-section">
+                    <div class="search-group">
+                        <label for="search-input">Buscar</label>
+                        <input type="text" id="search-input" placeholder="Nombre o etiquetas...">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="tag-filter">Etiqueta</label>
+                        <select id="tag-filter">
+                            <option value="todas">Todas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="order-by">Ordenar por</label>
+                        <select id="order-by">
+                            <option value="cuota">Cuota</option>
+                            <option value="coste">Coste total</option>
+                            <option value="plazo">Plazo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="order-dir">Dirección</label>
+                        <select id="order-dir">
+                            <option value="asc">Ascendente</option>
+                            <option value="desc">Descendente</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="escenarios-content" class="scenarios-list"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Esta aplicación utiliza localStorage para guardar tus datos localmente.</p>
+    </footer>
+    <div id="status-messages" aria-live="polite" class="sr-only"></div>
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
-

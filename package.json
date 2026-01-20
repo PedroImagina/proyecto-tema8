@@ -5,14 +5,13 @@
   "main": "src/main.js",
   "type": "module",
   "scripts": {
-    "dev": "echo 'Abre index.html en tu navegador'"
+    "dev": "npx serve ."
   },
   "keywords": [
-    "hipoteca",
     "calculadora",
+    "hipoteca",
     "simulador"
   ],
   "author": "",
   "license": "ISC"
 }
-
